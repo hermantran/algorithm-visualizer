@@ -7,10 +7,11 @@ block content
     - for (var algorithm in algorithms)
       - if (['stats', 'afterAccess', 'afterComparison'].indexOf(algorithm) < 0)
         div.row
-          div.col-md-10
+          div.col-md-10.language-javascript
             code
               | algorithms.#{algorithm}
             pre
-              | &nbsp;&nbsp; #{algorithms[algorithm].toString()}
+              code
+                | &nbsp;&nbsp; #{algorithms[algorithm].toString()}
 
   script(src='js/lib/require.min.js', data-main='js/main')
