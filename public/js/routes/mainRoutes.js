@@ -4,13 +4,13 @@ define([
 ], function(app) {
   'use strict';
   return app.config(['$routeProvider', function($routeProvider) {
-    var main = { 
-        controller: 'mainCtrl', 
-        templateUrl: paths.base + '/js/templates/main.html' 
-    };
-    
     $routeProvider
-      .when('/', main)
-      .when('/!', main);
+      .when('/', { 
+        controller: 'mainCtrl', 
+        templateUrl: '/partials/main' 
+      })
+      .otherwise({
+        redirectTo: '/'
+      });
   }]);
 });

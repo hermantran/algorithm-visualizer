@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  div.container
+    h1= title
+    ng:view
+    - for (var algorithm in algorithms)
+      - if (['stats', 'afterAccess', 'afterComparison'].indexOf(algorithm) < 0)
+        div.row
+          div.col-md-10
+            code
+              | algorithms.#{algorithm}
+            pre
+              | &nbsp;&nbsp; #{algorithms[algorithm].toString()}
+
+  script(src='js/lib/require.min.js', data-main='js/main')

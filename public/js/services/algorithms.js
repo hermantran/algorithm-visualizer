@@ -17,6 +17,6 @@ define([
     
     this.run = function(algorithm, elements) {
       algorithms[algorithm](randomArray(elements));  
-    }
+    };
   });
 });

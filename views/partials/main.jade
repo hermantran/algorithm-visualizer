@@ -1,0 +1,29 @@
+div.row
+  div.col-md-12
+    | Runtime: {{ stats.runtime }} ms
+    
+div.row
+  div.col-md-12
+    | Accesses: {{ stats.accesses }}
+    
+div.row
+  div.col-md-12
+    | Comparisons: {{ stats.comparisons }}
+
+div.row
+  div.col-md-3
+    form(role='form')
+      div.form-group
+        label(for='size'). Array size:
+        input.form-control(type='text', name='size', data-ng-model='size')
+        
+div.row(data-ng-show='error')
+  div.col-md-12
+    | Invalid array size. Please enter a number between 1 and 10000.
+  
+div.row
+  div.col-md-12
+    - var algorithms = ['Bubble', 'Cocktail', 'Insertion', 'Selection', 'Quick'];
+    - for (var i = 0, len = algorithms.length; i < len; i++)
+        button.btn.btn-primary(data-ng-click='run(\'#{algorithms[i].toLowerCase()}Sort\')')
+          | #{algorithms[i]} Sort

@@ -3,6 +3,5 @@ define([
   'angular.route'
 ], function() {
   'use strict';
-  return angular.module('visualizr', ['ngRoute'])
-    .value('paths', paths);
+  return angular.module('visualizr', ['ngRoute']);
 });
