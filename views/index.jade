@@ -3,15 +3,15 @@ extends layout
 block content
   div.container
     h1= title
+    
+    ul.nav.nav-pills
+      - var routes = ['Visualization', 'Benchmarking', 'Source'];
+      - for (var i = 0; i < routes.length; ++i)
+        li
+          a(href="#/#{routes[i].toLowerCase()}"). #{routes[i]}
+          
+    hr
+          
     ng:view
-    - for (var algorithm in algorithms)
-      - if (['stats', 'afterAccess', 'afterComparison'].indexOf(algorithm) < 0)
-        div.row
-          div.col-md-10.language-javascript
-            code
-              | algorithms.#{algorithm}
-            pre
-              code
-                | &nbsp;&nbsp; #{algorithms[algorithm].toString()}
-
+    
   script(src='js/lib/require.min.js', data-main='js/main')

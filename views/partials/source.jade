@@ -1,0 +1,22 @@
+h2. Source
+p. The source code for the implementation of each sorting algorithm is given below (additional benchmarking overhead is also added beyond the core sorting):
+
+div.row
+  div.col-md-2
+    ul.nav.nav-pills.nav-stacked
+      - var i = 0;
+      - for (var algorithm in algorithms)
+        - if (['stats', 'afterAccess', 'afterComparison'].indexOf(algorithm) < 0)
+          - i++;
+            li(data-ng-class='{ active: isActive(#{i}) }', data-ng-click='setActive(#{i})')
+              a.is-clickable #{algorithm}
+  div.col-md-10
+    - var i = 0;
+    - for (var algorithm in algorithms)
+      - if (['stats', 'afterAccess', 'afterComparison'].indexOf(algorithm) < 0)
+        - i++;
+          div.row
+            div.col-md-10.language-javascript
+              pre(data-ng-show='isActive(#{i})')
+                code
+                  | algorithms.#{algorithm} = #{algorithms[algorithm].toString()}

@@ -1,3 +1,12 @@
 code[class*="language-"], pre[class*="language-"] {
   font-size: 15px;
+  margin-top: 0;
+}
+
+.is-clickable {
+  cursor:pointer;
+}
+
+.padded {
+  padding-bottom: 10px;
 }

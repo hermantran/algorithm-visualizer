@@ -5,11 +5,12 @@
 
 exports.index = function(req, res) {
   res.render('index', { 
-    title: 'Home',
-    algorithms: res.app.settings['src'].algorithms
+    title: 'Algorithm Visualizer'
   });
 };
 
 exports.partials = function(req, res) {
-  res.render('partials/' + req.params.name, {});
+  res.render('partials/' + req.params.name, {
+    algorithms: res.app.settings['src'].algorithms
+  });
 };

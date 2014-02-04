@@ -3,20 +3,16 @@ define([
   'algorithms'
 ], function(app, algorithms) {
   app.service('algorithms', function() {
-    this.stats = algorithms.stats;
-
-    function randomArray(len) {
-      var arr = [];
-      
-      for (var i = 0; i < len; i++) {
-        arr.push(Math.round(Math.random() * len));    
-      }
-      
-      return arr;
-    }
+    this.runs = [];
     
-    this.run = function(algorithm, elements) {
-      algorithms[algorithm](randomArray(elements));  
+    this.sort = function(algorithm, array) {
+      var run = algorithms[algorithm](array),
+          runCopy = JSON.parse(JSON.stringify(run));
+      
+      runCopy.runtime = Math.round(run.runtime * 1000) / 1000.0;
+      runCopy.sort = algorithm;
+      runCopy.size = array.length;
+      this.runs.push(JSON.parse(JSON.stringify(runCopy)));
     };
   });
 });

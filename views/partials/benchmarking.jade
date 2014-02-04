@@ -1,0 +1,53 @@
+h2. Benchmarking
+p. Benchmark the runtime, array element accesses, and array element comparisons of each sorting algorithm with a random array of the given size.
+p.text-danger. The sort runs client-side and may lock up the browser on slower computers or certain browsers (IE < 9).
+
+div.row
+  div.col-md-2
+    form(role='form')
+      div.form-group
+        label(for='size'). Array size:
+        input.form-control(type='text', name='size', data-ng-model='size')
+        
+div.row(data-ng-show='error')
+  div.col-md-12
+    p.text-danger
+      | Invalid array size. Please enter a number between 1 and {{ maxSize }}.
+  
+div.row.padded
+  div.col-md-12.padded
+    - var algorithms = ['Bubble', 'Cocktail', 'Insertion', 'Selection', 'Quick'];
+    - for (var i = 0, len = algorithms.length; i < len; i++)
+        button.btn.btn-primary(data-ng-click='run(\'#{algorithms[i].toLowerCase()}Sort\')')
+          | #{algorithms[i]} Sort
+    button.btn(data-ng-click='clearRuns()')
+      | Clear Runs
+
+div.row
+  div.col-md-6
+    | Showing statistics for {{ filtered.length }} of {{ runs.length }} runs
+    table.table.table-striped.table-bordered
+      thead
+        tr
+          th. Sort
+          th.text-right. Array Size
+          th.text-right. Runtime (ms)
+          th.text-right. Accesses
+          th.text-right. Comparisons
+      tbody
+        tr.text-right(data-ng-repeat='run in filtered = (runs | filter:search:strict)')
+          td.text-left {{ run.sort }}
+          td. {{ run.size }}
+          td. {{ run.runtime }}
+          td. {{ run.accesses }}
+          td. {{ run.comparisons }}
+        
+  div.col-md-3(data-ng-show='runs.length > 0')
+    | Filter benchmarking statistics:
+    div.form-group
+      label(for='filter-sort'). Sort:
+      input.form-control(type='text', name='filter-sort', data-ng-model='search.sort')
+    div.form-group
+      label(for='filter-size'). Array size:
+      input.form-control(type='text', name='filter-size', data-ng-model='search.size')
+  

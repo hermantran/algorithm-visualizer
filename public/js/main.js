@@ -5,7 +5,8 @@ require.config({
     'angular': 'lib/angular.min',
     'angular.route': 'lib/angular-route.min',
     'algorithms': 'lib/algorithms.min',
-    'prism': 'lib/prism'
+    'prism': 'lib/prism',
+    'd3': 'lib/d3.v3.min'
   },
   
   shim: {
@@ -20,15 +21,17 @@ require.config({
     
     'prism': {
       exports: 'Prism'  
+    },
+    
+    'd3': {
+      exports: 'd3'  
     }
   }
 });
 
 define([
-  'prism',
   'app',
   'routes/mainRoutes',
-], function(prism) {
-  prism.highlightAll();
+], function() {
   angular.bootstrap(document, ['visualizr']);
 });
