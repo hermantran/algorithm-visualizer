@@ -7,12 +7,18 @@ define([
     
     this.sort = function(algorithm, array) {
       var run = algorithms[algorithm](array),
-          runCopy = JSON.parse(JSON.stringify(run));
+          runCopy = {};
       
-      runCopy.runtime = Math.round(run.runtime * 1000) / 1000.0;
       runCopy.sort = algorithm;
+      runCopy.runtime = addCommas(Math.round(run.runtime * 100) / 100);
       runCopy.size = array.length;
-      this.runs.push(JSON.parse(JSON.stringify(runCopy)));
+      runCopy.accesses = addCommas(run.accesses);
+      runCopy.comparisons = addCommas(run.comparisons);
+      this.runs.push(runCopy);
     };
+    
+    function addCommas(x) {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");  
+    }
   });
 });

@@ -1,5 +1,5 @@
 h2. Source
-p. The source code for the implementation of each sorting algorithm is given below (additional benchmarking overhead is also added beyond the core sorting):
+p. The core implementation of each sorting algorithm is given below. The actual functions run with additional overhead to support benchmarking.
 
 div.row
   div.col-md-2
@@ -10,13 +10,11 @@ div.row
           - i++;
             li(data-ng-class='{ active: isActive(#{i}) }', data-ng-click='setActive(#{i})')
               a.is-clickable #{algorithm}
-  div.col-md-10
-    - var i = 0;
-    - for (var algorithm in algorithms)
-      - if (['stats', 'afterAccess', 'afterComparison'].indexOf(algorithm) < 0)
-        - i++;
-          div.row
-            div.col-md-10.language-javascript
-              pre(data-ng-show='isActive(#{i})')
-                code
-                  | algorithms.#{algorithm} = #{algorithms[algorithm].toString()}
+  div.col-md-10.language-javascript
+      - var i = 0;
+      - for (var algorithm in algorithms)
+        - if (['stats', 'afterAccess', 'afterComparison'].indexOf(algorithm) < 0)
+          - i++;
+            pre(data-ng-show='isActive(#{i})')
+              code
+                | algorithms.#{algorithm} = #{algorithms[algorithm].toString()}

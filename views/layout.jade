@@ -5,8 +5,8 @@ html(lang='en')
     meta(http-equiv='X-UA-Compatible', content='IE=edge')
     title. Visualizer
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
-    link(rel='stylesheet', href='css/lib/bootstrap.min.css')
-    link(rel='stylesheet', href='css/lib/prism.css')
-    link(rel='stylesheet', href='css/styles.css')
+    - var css = ['lib/bootstrap.min', 'lib/prism', 'styles.min'];
+    - for (var i = 0; i < css.length; ++i)
+      link(rel='stylesheet', href='css/#{css[i]}.css')
   body
     block content

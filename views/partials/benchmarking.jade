@@ -1,6 +1,6 @@
 h2. Benchmarking
 p. Benchmark the runtime, array element accesses, and array element comparisons of each sorting algorithm with a random array of the given size.
-p.text-danger. The sort runs client-side and may lock up the browser on slower computers or certain browsers (IE < 9).
+p.text-danger. Warning: the sort runs client-side and may lock up the window on slower computers or certain browsers (IE) when sorting an array larger than 10,000.
 
 div.row
   div.col-md-2
@@ -23,8 +23,8 @@ div.row.padded
     button.btn(data-ng-click='clearRuns()')
       | Clear Runs
 
-div.row
-  div.col-md-6
+div.row(data-ng-show='runs.length > 0')
+  div.col-md-9
     | Showing statistics for {{ filtered.length }} of {{ runs.length }} runs
     table.table.table-striped.table-bordered
       thead
@@ -42,12 +42,12 @@ div.row
           td. {{ run.accesses }}
           td. {{ run.comparisons }}
         
-  div.col-md-3(data-ng-show='runs.length > 0')
+  div.col-md-3
     | Filter benchmarking statistics:
     div.form-group
       label(for='filter-sort'). Sort:
-      input.form-control(type='text', name='filter-sort', data-ng-model='search.sort')
+      input.form-control(type='text', name='filter-sort', placeholder='bubbleSort', data-ng-model='search.sort')
     div.form-group
       label(for='filter-size'). Array size:
-      input.form-control(type='text', name='filter-size', data-ng-model='search.size')
+      input.form-control(type='text', name='filter-size', placeholder='2000', data-ng-model='search.size')
   

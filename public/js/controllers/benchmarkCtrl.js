@@ -7,7 +7,7 @@ define([
   app.controller('benchmarkCtrl', function($scope, algorithms, d3) {
     $scope.runs = algorithms.runs;
     $scope.size = 2000;
-    $scope.maxSize = 20000;
+    $scope.maxSize = 50000;
     $scope.error = false;
     
     $scope.randomArray = function(size) {
