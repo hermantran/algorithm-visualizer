@@ -5,6 +5,8 @@ define([
   app.service('algorithms', function() {
     this.runs = [];
     
+    this.stats = algorithms.stats;
+    
     this.setAfterAccess = function(func) {
       algorithms.afterAccess = func;
     };

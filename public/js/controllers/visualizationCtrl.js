@@ -25,16 +25,21 @@ define([
     };
     
     algorithms.setAfterAccess(function(array) {
-      d3.addTransition(array);  
+      d3.addTransition({
+        dataset: array,
+        stats: algorithms.stats
+      });  
     });
     
     $scope.dataset = $scope.randomArray(50);
+    $scope.stats = algorithms.stats;
     
     d3.barChart({
       el: '#chart',
       width: 1000,
       height: 400,
-      dataset: $scope.dataset
+      dataset: $scope.dataset,
+      stats: $scope.stats
     });
   });
 });

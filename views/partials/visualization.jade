@@ -1,11 +1,14 @@
 h2. Visualization
 p. Click the button for the corresponding sorting algorithm to animate the sorting sequence.
 
-div.row
+div.row.padded
   div.col-md-12
     - var algorithms = ['Bubble', 'Cocktail', 'Insertion', 'Selection', 'Quick'];
     - for (var i = 0, len = algorithms.length; i < len; i++)
         button.btn.btn-primary(data-ng-click='animate(\'#{algorithms[i].toLowerCase()}Sort\')')
           | #{algorithms[i]} Sort
     button.btn(data-ng-click='reset()'). Reset Array
+    
+div.row
+  div.col-md-12
     svg#chart

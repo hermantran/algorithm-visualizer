@@ -4,13 +4,15 @@ define([
 ], function(app, d3) {
   app.service('d3', function() {
     var transitions = [],
-        svg, yScale, bars, text, options;
+        stats = [],
+        svg, yScale, bars, text, stat, options;
     
     this.shuffle = d3.shuffle;
     
     this.reset = function(dataset) {
-      this.transition(dataset, 0);
+      this.transition(dataset, [], 0);
       transitions.length = 0;
+      stats.length = 0;
     };
     
     this.barChart = function(opts) {
@@ -39,23 +41,31 @@ define([
         .attr('y', function(d) { return opts.height - 5 - yScale(d); })
         .style('text-anchor', 'middle')
         .text(function(d) { return d; });
+      
+      stat = svg
+        .append('text')
+        .text('Array accesses:' + opts.stats.accesses)
+        .attr('x', 0)
+        .attr('y', 10);
     };
     
     this.clearTransitions = function() {
-      transitions.length = 0;  
+      transitions.length = 0; 
+      stats.length = 0;
     };
     
-    this.addTransition = function(dataset) {
-      transitions.push(JSON.parse(JSON.stringify(dataset)));  
+    this.addTransition = function(opts) {
+      transitions.push(JSON.parse(JSON.stringify(opts.dataset)));  
+      stats.push(opts.stats.accesses);
     };
     
     this.runTransitions = function() {
       for (var i = 0; i < transitions.length; ++i) {
-        this.transition(transitions[i], 100 * i);  
+        this.transition(transitions[i], stats[i], 100 * i);  
       }
     };
     
-    this.transition = function(dataset, delay) {
+    this.transition = function(dataset, stats, delay) {
       bars
         .data(dataset)
         .transition()
@@ -71,6 +81,14 @@ define([
         .attr('x', function(d, i) { return (options.width / dataset.length) * i + (250 / dataset.length) + 5; })
         .attr('y', function(d) { return options.height - 5 - yScale(d); })
         .text(function(d) { return d; })
+        .duration(100)
+        .delay(delay);
+      
+      stat
+        .transition()
+        .text('Array accesses:' + stats)
+        .attr('x', 0)
+        .attr('y', 10)
         .duration(100)
         .delay(delay);
     };
