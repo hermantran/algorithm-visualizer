@@ -20,7 +20,7 @@ define([
         templateUrl: '/partials/source'
       })
       .otherwise({
-        redirectTo: '/benchmarking'
+        redirectTo: '/visualization'
       });
   }]);
 });

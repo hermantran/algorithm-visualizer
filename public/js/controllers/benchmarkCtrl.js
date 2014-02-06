@@ -10,6 +10,8 @@ define([
     $scope.maxSize = 50000;
     $scope.error = false;
     
+    algorithms.setAfterAccess(function() {});
+    
     $scope.randomArray = function(size) {
       var arr = [];
       for (var i = 1; i <= size; ++i) {
