@@ -5,6 +5,10 @@ define([
   app.service('algorithms', function() {
     this.runs = [];
     
+    this.setAfterAccess = function(func) {
+      algorithms.afterAccess = func;
+    };
+    
     this.sort = function(algorithm, array) {
       var run = algorithms[algorithm](array),
           runCopy = {};
