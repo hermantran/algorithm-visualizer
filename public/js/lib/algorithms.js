@@ -99,10 +99,10 @@
         i,
         j;
     
-    for (i = 0; i < len; i++) {
+    for (i = 0; i < len; ++i) {
       swapped = false;
       
-      for (j = 0; j < len - 1; j++) {
+      for (j = 0; j < len - 1; ++j) {
         if (_compare(j, '>', j+1)) {
           _swap(j, j+1);
           swapped = true;
@@ -121,22 +121,22 @@
         i,
         j;
     
-    for (i = 0; i < len; i++) {
+    for (i = 0; i < len; ++i) {
       swapped = false;
       
-      // Most largest value to end
+      // Move smallest value to beginning
       if (i % 2) {
-        for (j = 0; j < len - 1; j++) {
-          if (_compare(j, '>', j+1)) {
-            _swap(j, j+1);
+        for (j = len - 1; j > 0; --j) {
+          if (_compare(j-1, '>', j)) {
+            _swap(j-1, j);
             swapped = true;
           }
         }
-      // Move smallest value to beginning
+      // Most largest value to end
       } else {
-        for (j = len - 1; j > 0; j--) {
-          if (_compare(j-1, '>', j)) {
-            _swap(j-1, j);
+        for (j = 0; j < len - 1; ++j) {
+          if (_compare(j, '>', j+1)) {
+            _swap(j, j+1);
             swapped = true;
           }
         }
@@ -155,10 +155,10 @@
         i,
         j;
     
-    for (i = 1; i < len; i++) {
+    for (i = 1; i < len; ++i) {
       pos = -1;
       
-      for (j = 0; j < i; j++) {
+      for (j = 0; j < i; ++j) {
         if (_compare(i, '<', j)) {
           pos = j;
           temp = array[i];
@@ -167,7 +167,7 @@
       }
       
       if (pos > -1) {
-        for (j = i; j > pos; j--) {
+        for (j = i; j > pos; --j) {
           _set(j, array[j-1]);
         }
         _set(pos, temp);
@@ -208,7 +208,7 @@
       
       _swap(pivot, right);
       
-      for (i = left; i < right; i++) {
+      for (i = left; i < right; ++i) {
         // The right index now holds the pivot value, so this compares the pivot value
         if  (_compare(i, '<=', right)) {
           _swap(i, storeIndex);
@@ -229,9 +229,9 @@
         i,
         j;
     
-    for (i = 0; i < len - 1; i++) {
+    for (i = 0; i < len - 1; ++i) {
       min = i;
-      for (j = i + 1; j < len; j++) {
+      for (j = i + 1; j < len; ++j) {
         if (_compare(j, '<', min)) {
           min = j;
         }
@@ -240,8 +240,6 @@
       _swap(i, min);
     }
   };
-
-
 
   // Add these properties after each algorithm property is prepared
   algorithms.afterAccess = function() {};

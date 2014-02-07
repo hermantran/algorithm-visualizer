@@ -8,9 +8,10 @@ define([
         svg, yScale, bars, text, accesses, comparisons, options;
     
     this.shuffle = d3.shuffle;
+    this.duration = 100;
     
     this.reset = function(dataset) {
-      this.transition(dataset, [], 0);
+      this.transition(dataset, { accesses: 0, comparisons: 0 }, 0);
       transitions.length = 0;
       stats.length = 0;
     };
@@ -19,11 +20,11 @@ define([
       options = opts;
       svg = d3.select(opts.el)
         .attr('viewBox', '0 0 ' + opts.width + ' ' + opts.height)
-        .attr('preserveAspectRatio', 'xMaxYMin meet');
+        .attr('preserveAspectRatio', 'xMinYMin meet')
       
       yScale = d3.scale.linear()
         .domain([d3.min(opts.dataset, function(d) { return d; }), d3.max(opts.dataset, function(d) { return d; })])
-        .range([0, opts.height - 20]);
+        .range([0, opts.height - 55]);
     
       bars = svg.selectAll('rect')
         .data(opts.dataset)
@@ -69,7 +70,7 @@ define([
     
     this.runTransitions = function() {
       for (var i = 0; i < transitions.length; ++i) {
-        this.transition(transitions[i], stats[i], 100 * i);  
+        this.transition(transitions[i], stats[i], this.duration * i);  
       }
     };
     
@@ -80,7 +81,7 @@ define([
         .attr('height', function(d) { return yScale(d); })
         .attr('x', function(d, i) { return (options.width / dataset.length) * i + 5; })
         .attr('y', function(d) { return options.height - yScale(d); })
-        .duration(100)
+        .duration(this.duration)
         .delay(delay);
     
       text
@@ -89,19 +90,19 @@ define([
         .attr('x', function(d, i) { return (options.width / dataset.length) * i + (250 / dataset.length) + 5; })
         .attr('y', function(d) { return options.height - 5 - yScale(d); })
         .text(function(d) { return d; })
-        .duration(100)
+        .duration(this.duration)
         .delay(delay);
       
       accesses
         .transition()
         .text('Accesses: ' + stats.accesses)
-        .duration(100)
+        .duration(this.duration)
         .delay(delay);
       
       comparisons
         .transition()
         .text('Comparisons: ' + stats.comparisons)
-        .duration(100)
+        .duration(this.duration)
         .delay(delay);
     };
   });

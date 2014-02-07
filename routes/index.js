@@ -5,7 +5,8 @@
 
 exports.index = function(req, res) {
   res.render('index', { 
-    title: 'Algorithm Visualizer'
+    title: 'Algorithm Visualizer',
+    description: 'Data visualization for common sorting algorithms'
   });
 };
 
