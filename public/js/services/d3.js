@@ -17,7 +17,9 @@ define([
     
     this.barChart = function(opts) {
       options = opts;
-      svg = d3.select(opts.el);
+      svg = d3.select(opts.el)
+        .attr('viewBox', '0 0 ' + opts.width + ' ' + opts.height)
+        .attr('preserveAspectRatio', 'xMaxYMin meet');
       
       yScale = d3.scale.linear()
         .domain([d3.min(opts.dataset, function(d) { return d; }), d3.max(opts.dataset, function(d) { return d; })])
@@ -44,9 +46,9 @@ define([
       
       stat = svg
         .append('text')
-        .text('Array accesses:' + opts.stats.accesses)
+        .text('Array accesses: ' + opts.stats.accesses)
         .attr('x', 0)
-        .attr('y', 10);
+        .attr('y', 15);
     };
     
     this.clearTransitions = function() {
@@ -86,9 +88,7 @@ define([
       
       stat
         .transition()
-        .text('Array accesses:' + stats)
-        .attr('x', 0)
-        .attr('y', 10)
+        .text('Array accesses: ' + stats)
         .duration(100)
         .delay(delay);
     };
