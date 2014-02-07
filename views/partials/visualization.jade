@@ -5,9 +5,9 @@ div.row.padded
   div.col-md-12
     - var algorithms = ['Bubble', 'Cocktail', 'Insertion', 'Selection', 'Quick'];
     - for (var i = 0, len = algorithms.length; i < len; i++)
-        button.btn.btn-primary(data-ng-click='animate(\'#{algorithms[i].toLowerCase()}Sort\')')
+        button.btn.btn-primary.margin(data-ng-click='animate(\'#{algorithms[i].toLowerCase()}Sort\')')
           | #{algorithms[i]} Sort
-    button.btn(data-ng-click='reset()'). Reset Array
+    button.btn.margin(data-ng-click='reset()'). Reset Array
     
 div.row
   div.col-md-12

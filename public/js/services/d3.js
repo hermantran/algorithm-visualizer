@@ -5,7 +5,7 @@ define([
   app.service('d3', function() {
     var transitions = [],
         stats = [],
-        svg, yScale, bars, text, stat, options;
+        svg, yScale, bars, text, accesses, comparisons, options;
     
     this.shuffle = d3.shuffle;
     
@@ -44,11 +44,17 @@ define([
         .style('text-anchor', 'middle')
         .text(function(d) { return d; });
       
-      stat = svg
+      accesses = svg
         .append('text')
-        .text('Array accesses: ' + opts.stats.accesses)
+        .text('Accesses: ' + opts.stats.accesses)
         .attr('x', 0)
         .attr('y', 15);
+      
+      comparisons = svg
+        .append('text')
+        .text('Comparisons: ' + opts.stats.comparisons)
+        .attr('x', 0)
+        .attr('y', 35);
     };
     
     this.clearTransitions = function() {
@@ -58,7 +64,7 @@ define([
     
     this.addTransition = function(opts) {
       transitions.push(JSON.parse(JSON.stringify(opts.dataset)));  
-      stats.push(opts.stats.accesses);
+      stats.push(JSON.parse(JSON.stringify(opts.stats)));
     };
     
     this.runTransitions = function() {
@@ -86,9 +92,15 @@ define([
         .duration(100)
         .delay(delay);
       
-      stat
+      accesses
         .transition()
-        .text('Array accesses: ' + stats)
+        .text('Accesses: ' + stats.accesses)
+        .duration(100)
+        .delay(delay);
+      
+      comparisons
+        .transition()
+        .text('Comparisons: ' + stats.comparisons)
         .duration(100)
         .delay(delay);
     };
