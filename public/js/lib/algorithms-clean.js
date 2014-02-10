@@ -237,25 +237,9 @@
     }
   };
 
-  // Add these properties after each algorithm property is prepared
-  algorithms.afterAccess = function() {};
-  algorithms.afterComparison = function() {};
-  algorithms.stats = _stats;
-  
   // Add the internal helper functions for read-only
   if ('defineProperties' in Object) {
     Object.defineProperties(algorithms, {
-      afterAccess: {
-        enumerable: false
-      },
-      afterComparison: {
-        enumerable: false
-      },
-      stats: {
-        enumerable: false,
-        configurable: false,
-        writable: false
-      },
       _swap: {
         enumerable: false,
         configurable: false,
@@ -273,6 +257,27 @@
         configurable: false,
         writable: false,
         value: _compare
+      }
+    });
+  }
+
+  // Add these properties after each algorithm property is prepared
+  algorithms.afterAccess = function() {};
+  algorithms.afterComparison = function() {};
+  algorithms.stats = _stats;
+  
+  if ('defineProperties' in Object) {
+    Object.defineProperties(algorithms, {
+      afterAccess: {
+        enumerable: false
+      },
+      afterComparison: {
+        enumerable: false
+      },
+      stats: {
+        enumerable: false,
+        configurable: false,
+        writable: false
       }
     });
   }
