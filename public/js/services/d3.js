@@ -2,6 +2,7 @@ define([
   'app',
   'd3'
 ], function(app, d3) {
+  'use strict';
   app.service('d3', function() {
     var transitions = [],
         stats = [],
@@ -20,7 +21,7 @@ define([
       options = opts;
       svg = d3.select(opts.el)
         .attr('viewBox', '0 0 ' + opts.width + ' ' + opts.height)
-        .attr('preserveAspectRatio', 'xMinYMin meet')
+        .attr('preserveAspectRatio', 'xMinYMin meet');
       
       yScale = d3.scale.linear()
         .domain([d3.min(opts.dataset, function(d) { return d; }), d3.max(opts.dataset, function(d) { return d; })])

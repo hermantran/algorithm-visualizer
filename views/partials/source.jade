@@ -3,18 +3,30 @@ p. The core implementation of each sorting algorithm is given below. The actual 
 
 div.row
   div.col-md-2
+    h5.text-center. Sorting Algorithm
     ul.nav.nav-pills.nav-stacked
       - var i = 0;
       - for (var algorithm in algorithms)
-        - if (['stats', 'afterAccess', 'afterComparison'].indexOf(algorithm) < 0)
-          - i++;
-            li(data-ng-class='{ active: isActive(#{i}) }', data-ng-click='setActive(#{i})')
-              a.is-clickable #{algorithm}
+        - i++;
+          li(data-ng-class='{ active: isActive(#{i}) }', data-ng-click='setActive(#{i})')
+            a.is-clickable #{algorithm}
+            
+    h5.text-center. Helper Functions
+    ul.nav.nav-pills.nav-stacked
+      - var helpers = ['_compare', '_set', '_swap'];
+      - for (var j = i+1, i = 0, len = helpers.length; i < len; ++i, ++j)
+          li(data-ng-class='{ active: isActive(#{j}) }', data-ng-click='setActive(#{j})')
+            a.is-clickable #{helpers[i]}
+    
   div.col-md-10.language-javascript
       - var i = 0;
       - for (var algorithm in algorithms)
-        - if (['stats', 'afterAccess', 'afterComparison'].indexOf(algorithm) < 0)
-          - i++;
-            pre(data-ng-show='isActive(#{i})')
-              code
-                | &nbsp;&nbsp;#{algorithms[algorithm].toString()}
+        - i++;
+          pre(data-ng-show='isActive(#{i})')
+            code
+              | &nbsp;&nbsp;#{algorithms[algorithm].toString()}
+      - for (var j = i+1, i = 0, len = helpers.length; i < len; ++i, ++j)
+          pre(data-ng-show='isActive(#{j})')
+            code
+              | &nbsp;&nbsp;#{algorithms[helpers[i]].toString()}
+

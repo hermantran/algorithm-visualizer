@@ -2,6 +2,7 @@ define([
   'app',
   'algorithms'
 ], function(app, algorithms) {
+  'use strict';
   app.service('algorithms', function() {
     this.runs = [];
     

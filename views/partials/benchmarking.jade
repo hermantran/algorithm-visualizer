@@ -16,10 +16,10 @@ div.row(data-ng-show='error')
   
 div.row.padded
   div.col-md-12.padded
-    - var algorithms = ['Bubble', 'Cocktail', 'Insertion', 'Selection', 'Quick'];
-    - for (var i = 0, len = algorithms.length; i < len; i++)
-        button.btn.btn-primary.margin(data-ng-click='run(\'#{algorithms[i].toLowerCase()}Sort\')')
-          | #{algorithms[i]} Sort
+    - for (var algorithm in algorithms)
+      button.btn.btn-primary.margin(data-ng-click='run(\'#{algorithm}\')')
+        - algorithm = algorithm.charAt(0).toUpperCase() + algorithm.replace('Sort', ' Sort').slice(1);
+          | #{algorithm}
     button.btn.margin(data-ng-click='clearRuns()')
       | Clear Runs
 
