@@ -1,45 +1,48 @@
 define([
   'app',
-  'services/d3',
-  'services/algorithms'
+  'services/barChartService',
+  'services/algorithmsService',
+  'services/arrayService'
 ], function(app) {
   'use strict';
-  app.controller('visualizationCtrl', function($scope, d3, algorithms) {
-    $scope.randomArray = function(size) {
-      var arr = [];
-      for (var i = 1; i <= size; ++i) {
-          arr.push(i);
-      }
-      return d3.shuffle(arr);
-    };
+  app.controller('visualizationCtrl', function($scope, barChartService, algorithmsService, arrayService) {
+    $scope.arraySize = 50;
     
     $scope.reset = function() {
-      $scope.dataset = $scope.randomArray(50);
-      d3.reset($scope.dataset);
+      barChartService.reset($scope.dataset);
+    };
+    
+    $scope.shuffle = function() {
+      $scope.dataset = arrayService.randomArray($scope.arraySize);
+      barChartService.reset($scope.dataset);
     };
       
     $scope.animate = function(sort) {
-      d3.clearTransitions();
-      algorithms.sort(sort, $scope.dataset);  
-      d3.runTransitions();
+      barChartService.clearTransitions();
+      algorithmsService.sort(sort, arrayService.deepCopy($scope.dataset));  
+      barChartService.runTransitions();
     };
     
-    algorithms.setAfterAccess(function(array) {
-      d3.addTransition({
-        dataset: array,
-        stats: algorithms.stats
-      });  
-    });
+    $scope.init = function() {
+      algorithmsService.setAfterAccess(function(array) {
+        barChartService.addTransition({
+          dataset: array,
+          stats: algorithmsService.stats
+        });  
+      });
+      
+      $scope.dataset = arrayService.randomArray($scope.arraySize);
+      $scope.stats = algorithmsService.stats;
+      
+      barChartService.barChart({
+        el: '#chart',
+        width: 1000,
+        height: 400,
+        dataset: $scope.dataset,
+        stats: $scope.stats
+      });
+    };
     
-    $scope.dataset = $scope.randomArray(50);
-    $scope.stats = algorithms.stats;
-    
-    d3.barChart({
-      el: '#chart',
-      width: 1000,
-      height: 400,
-      dataset: $scope.dataset,
-      stats: $scope.stats
-    });
+    $scope.init();
   });
 });

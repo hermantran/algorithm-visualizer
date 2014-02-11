@@ -3,7 +3,7 @@ define([
   'algorithms'
 ], function(app, algorithms) {
   'use strict';
-  app.service('algorithms', function() {
+  app.service('algorithmsService', function() {
     this.runs = [];
     
     this.stats = algorithms.stats;

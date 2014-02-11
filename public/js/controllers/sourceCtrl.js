@@ -1,9 +1,9 @@
 define([
   'app',
-  'services/prism'
+  'services/prismService'
 ], function(app) {
   'use strict';
-  app.controller('sourceCtrl', function($scope, prism) {
+  app.controller('sourceCtrl', function($scope, prismService) {
     $scope.active = 0;
     
     $scope.setActive = function(index) {
@@ -20,7 +20,7 @@ define([
     
     $scope.init = function(index) {
       $scope.active = index;
-      prism.highlightAll();
+      prismService.highlightAll();
     };
     
     $scope.init(1);

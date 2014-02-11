@@ -2,7 +2,8 @@ define([
   'app',
   'prism'
 ], function(app, prism) {
-  app.service('prism', function() {
+  'use strict';
+  app.service('prismService', function() {
     return prism;
   });
 });

@@ -3,7 +3,7 @@ define([
   'd3'
 ], function(app, d3) {
   'use strict';
-  app.service('d3', function() {
+  app.service('barChartService', function() {
     var transitions = [],
         stats = [],
         svg, yScale, bars, text, accesses, comparisons, options;

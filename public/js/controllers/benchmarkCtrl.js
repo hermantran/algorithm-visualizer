@@ -1,25 +1,19 @@
 define([
   'app',
-  'services/algorithms',
-  'services/d3'
+  'services/algorithmsService',
+  'services/arrayService'
 ], function(app) {
   'use strict';
-  app.controller('benchmarkCtrl', function($scope, algorithms, d3) {
-    $scope.runs = algorithms.runs;
+  app.controller('benchmarkCtrl', function($scope, algorithmsService, arrayService) {
+    $scope.runs = algorithmsService.runs;
     $scope.size = 2000;
     $scope.maxSize = 50000;
     $scope.error = false;
     
-    algorithms.setAfterAccess(function() {});
-    
-    $scope.randomArray = function(size) {
-      var arr = [];
-      for (var i = 1; i <= size; ++i) {
-          arr.push(i);
-      }
-      return d3.shuffle(arr);
+    $scope.init = function() {
+      algorithmsService.setAfterAccess(function() {});
     };
-    
+
     $scope.clearRuns = function() {
       $scope.runs.length = 0;  
     };
@@ -29,12 +23,14 @@ define([
           arr;
       
       if (size > 0 && size <= $scope.maxSize) {
-        arr = $scope.randomArray(size);
+        arr = arrayService.randomArray(size);
         $scope.error = false;
-        algorithms.sort(sort, arr);  
+        algorithmsService.sort(sort, arr);  
       } else {
         $scope.error = true;  
       }
     };
+    
+    $scope.init();
   });
 });
