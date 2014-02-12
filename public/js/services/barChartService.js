@@ -3,18 +3,21 @@ define([
   'd3'
 ], function(app, d3) {
   'use strict';
-  app.service('barChartService', function() {
-    var transitions = [],
+  app.service('barChartService', function(arrayService) {
+    var datasets = [],
         stats = [],
-        svg, yScale, bars, text, swaps, comparisons, options;
+        pairs = [],
+        transitionLength = 0,
+        svg, yScale, bars, swaps, comparisons, options;
     
     this.shuffle = d3.shuffle;
     this.duration = 100;
+    this.barColor = 'rgb(50, 100, 255)';
+    this.highlightedColor = 'red';
     
     this.reset = function(dataset) {
-      this.transition(dataset, { swaps: 0, comparisons: 0 }, 0);
-      transitions.length = 0;
-      stats.length = 0;
+      this.clearTransitions();
+      this.transition(dataset, { swaps: 0, comparisons: 0 }, [0,0], 0, 0);
     };
     
     this.barChart = function(opts) {
@@ -35,17 +38,8 @@ define([
         .attr('height', function(d) { return yScale(d); })
         .attr('x', function(d, i) { return (opts.width / opts.dataset.length) * i + 5; })
         .attr('y', function(d) { return opts.height - yScale(d); })
-        .attr('fill', function(d) { return "rgb(" + 50 + ", " + 100 + ", 255)"; });
-  
-      text = svg.selectAll('text')
-        .data(opts.dataset)
-        .enter()
-        .append('text')
-        .attr('x', function(d, i) { return (opts.width / opts.dataset.length) * i + (250 / opts.dataset.length) + 5; })
-        .attr('y', function(d) { return opts.height - 5 - yScale(d); })
-        .style('text-anchor', 'middle')
-        .text(function(d) { return d; });
-      
+        .attr('fill', this.barColor);
+
       swaps = svg
         .append('text')
         .text('Swaps: ' + opts.stats.swaps)
@@ -56,43 +50,48 @@ define([
         .append('text')
         .text('Comparisons: ' + opts.stats.comparisons)
         .attr('x', 0)
-        .attr('y', 35);
+        .attr('y', 35);    
     };
     
     this.clearTransitions = function() {
-      transitions.length = 0; 
+      datasets.length = 0;
+      pairs.length = 0;
       stats.length = 0;
+      transitionLength = 1;
     };
     
     this.addTransition = function(opts) {
-      transitions.push(JSON.parse(JSON.stringify(opts.dataset)));  
-      stats.push(JSON.parse(JSON.stringify(opts.stats)));
+      datasets.push(arrayService.deepCopy(opts.dataset));  
+      pairs.push(arrayService.deepCopy(opts.pairs));
+      stats.push(arrayService.deepCopy(opts.stats));
     };
     
     this.runTransitions = function() {
-      for (var i = 0; i < transitions.length; ++i) {
-        this.transition(transitions[i], stats[i], this.duration * i);  
+      transitionLength = datasets.length;
+      for (var i = 0; i < transitionLength; ++i) {
+        this.transition(datasets[i], stats[i], pairs[i], this.duration * i, i);  
       }
     };
     
-    this.transition = function(dataset, stats, delay) {
+    this.transition = function(dataset, stats, pairs, delay, i) {
       bars
         .data(dataset)
         .transition()
         .attr('height', function(d) { return yScale(d); })
+        .attr('fill', this.barColor)
         .attr('x', function(d, i) { return (options.width / dataset.length) * i + 5; })
         .attr('y', function(d) { return options.height - yScale(d); })
         .duration(this.duration)
         .delay(delay);
-    
-      text
-        .data(dataset)
-        .transition()
-        .attr('x', function(d, i) { return (options.width / dataset.length) * i + (250 / dataset.length) + 5; })
-        .attr('y', function(d) { return options.height - 5 - yScale(d); })
-        .text(function(d) { return d; })
-        .duration(this.duration)
-        .delay(delay);
+      
+      if (i !== transitionLength - 1) {
+        bars
+          .filter(function(d, i) { return i === pairs[0] || i === pairs[1] })
+            .transition()
+            .attr('fill', this.highlightedColor)
+            .duration(this.duration)
+            .delay(delay);
+      }
       
       swaps
         .transition()

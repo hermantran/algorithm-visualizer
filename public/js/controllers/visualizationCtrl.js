@@ -24,10 +24,11 @@ define([
     };
     
     $scope.init = function() {
-      algorithmsService.setAfterSwap(function(array) {
+      algorithmsService.setAfterSwap(function(array, first, second) {
         barChartService.addTransition({
           dataset: array,
-          stats: algorithmsService.stats
+          stats: algorithmsService.stats,
+          pairs: [first, second]
         });  
       });
       

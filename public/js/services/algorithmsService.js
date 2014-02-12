@@ -14,13 +14,15 @@ define([
     
     this.sort = function(algorithm, array) {
       var run = algorithms[algorithm](array),
-          runCopy = {};
+          runCopy;
       
-      runCopy.sort = algorithm;
-      runCopy.runtime = addCommas(Math.round(run.runtime * 100) / 100);
-      runCopy.size = array.length;
-      runCopy.swaps = addCommas(run.swaps);
-      runCopy.comparisons = addCommas(run.comparisons);
+      runCopy = { 
+        sort: algorithm,
+        runtime: addCommas(Math.round(run.runtime * 100) / 100),
+        size: array.length,
+        swaps: addCommas(run.swaps),
+        comparisons: addCommas(run.comparisons)
+      }
       this.runs.push(runCopy);
     };
     
