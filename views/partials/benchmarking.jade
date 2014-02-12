@@ -2,12 +2,11 @@ h2. Benchmarking
 p. Benchmark the runtime, array element swaps, and array element comparisons of each sorting algorithm with a random array of the given size.
 p.text-danger. Warning: the sort runs client-side and may lock up the window on slower computers or certain browsers (IE) when sorting an array larger than 10,000.
 
-div.row
-  div.col-md-2
-    form(role='form')
-      div.form-group
-        label(for='size'). Array size:
-        input.form-control(type='text', name='size', data-ng-model='size')
+form.form-horizontal(role='form')
+  div.form-group
+    label(for='size').col-md-2.control-label. Array size:
+    div.col-md-2
+      input.form-control(type='text', name='size', data-ng-model='size')
         
 div.row(data-ng-show='error')
   div.col-md-12

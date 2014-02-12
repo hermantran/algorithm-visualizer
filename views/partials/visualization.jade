@@ -1,6 +1,18 @@
 h2. Visualization
 p. Click the button for the corresponding sorting algorithm to animate the sorting sequence.
 
+//form.form-horizontal(role='form')
+  //div.form-group
+    //label(for='size').col-md-2.control-label. Array size:
+    //div.col-md-2
+      //input.form-control(type='text', name='size', data-ng-model='arraySize')
+      
+div.row(data-ng-show='error')
+  div.col-md-12
+    p.text-danger
+      | Invalid array size. Please enter a number between 1 and {{ maxSize }}.
+
+
 div.row.padded
   div.col-md-12
     - for (var algorithm in algorithms)

@@ -22,7 +22,7 @@ define([
         size: array.length,
         swaps: addCommas(run.swaps),
         comparisons: addCommas(run.comparisons)
-      }
+      };
       this.runs.push(runCopy);
     };
     

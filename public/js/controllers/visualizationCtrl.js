@@ -7,6 +7,8 @@ define([
   'use strict';
   app.controller('visualizationCtrl', function($scope, barChartService, algorithmsService, arrayService) {
     $scope.arraySize = 50;
+    $scope.maxSize = 100;
+    $scope.error = false;
     
     $scope.reset = function() {
       barChartService.reset($scope.dataset);
@@ -18,9 +20,18 @@ define([
     };
       
     $scope.animate = function(sort) {
-      barChartService.clearTransitions();
-      algorithmsService.sort(sort, arrayService.deepCopy($scope.dataset));  
-      barChartService.runTransitions();
+      var size = parseInt($scope.arraySize, 10);
+      
+      if (size > 0 && size <= $scope.maxSize) {
+        $scope.error = false;
+        $scope.dataset = arrayService.randomArray($scope.arraySize);
+        barChartService.drawBars($scope.dataset);
+        barChartService.clearTransitions();
+        algorithmsService.sort(sort, arrayService.deepCopy($scope.dataset));  
+        barChartService.runTransitions(); 
+      } else {
+        $scope.error = true;  
+      }
     };
     
     $scope.init = function() {
