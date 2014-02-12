@@ -8,8 +8,8 @@ define([
     
     this.stats = algorithms.stats;
     
-    this.setAfterAccess = function(func) {
-      algorithms.afterAccess = func;
+    this.setAfterSwap = function(func) {
+      algorithms.afterSwap = func;
     };
     
     this.sort = function(algorithm, array) {
@@ -19,7 +19,7 @@ define([
       runCopy.sort = algorithm;
       runCopy.runtime = addCommas(Math.round(run.runtime * 100) / 100);
       runCopy.size = array.length;
-      runCopy.accesses = addCommas(run.accesses);
+      runCopy.swaps = addCommas(run.swaps);
       runCopy.comparisons = addCommas(run.comparisons);
       this.runs.push(runCopy);
     };

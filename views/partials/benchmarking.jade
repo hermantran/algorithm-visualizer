@@ -32,14 +32,14 @@ div.row(data-ng-show='runs.length > 0')
           th. Sort
           th.text-right. Array Size
           th.text-right. Runtime (ms)
-          th.text-right. Accesses
+          th.text-right. Swaps
           th.text-right. Comparisons
       tbody
         tr.text-right(data-ng-repeat='run in filtered = (runs | filter:search:strict)')
           td.text-left {{ run.sort }}
           td. {{ run.size }}
           td. {{ run.runtime }}
-          td. {{ run.accesses }}
+          td. {{ run.swaps }}
           td. {{ run.comparisons }}
         
   div.col-md-3
@@ -49,5 +49,5 @@ div.row(data-ng-show='runs.length > 0')
       input.form-control(type='text', name='filter-sort', placeholder='bubbleSort', data-ng-model='search.sort')
     div.form-group
       label(for='filter-size'). Array size:
-      input.form-control(type='text', name='filter-size', placeholder='2000', data-ng-model='search.size')
+      input.form-control(type='text', name='filter-size', placeholder='{{ size }}', data-ng-model='search.size')
   

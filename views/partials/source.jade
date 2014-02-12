@@ -13,7 +13,7 @@ div.row
             
     h5.text-center. Helper Functions
     ul.nav.nav-pills.nav-stacked
-      - var helpers = ['_compare', '_set', '_swap'];
+      - var helpers = ['_compare', '_swap'];
       - for (var j = i+1, i = 0, len = helpers.length; i < len; ++i, ++j)
           li(data-ng-class='{ active: isActive(#{j}) }', data-ng-click='setActive(#{j})')
             a.is-clickable #{helpers[i]}

@@ -24,7 +24,7 @@ define([
     };
     
     $scope.init = function() {
-      algorithmsService.setAfterAccess(function(array) {
+      algorithmsService.setAfterSwap(function(array) {
         barChartService.addTransition({
           dataset: array,
           stats: algorithmsService.stats

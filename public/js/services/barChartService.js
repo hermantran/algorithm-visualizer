@@ -6,13 +6,13 @@ define([
   app.service('barChartService', function() {
     var transitions = [],
         stats = [],
-        svg, yScale, bars, text, accesses, comparisons, options;
+        svg, yScale, bars, text, swaps, comparisons, options;
     
     this.shuffle = d3.shuffle;
     this.duration = 100;
     
     this.reset = function(dataset) {
-      this.transition(dataset, { accesses: 0, comparisons: 0 }, 0);
+      this.transition(dataset, { swaps: 0, comparisons: 0 }, 0);
       transitions.length = 0;
       stats.length = 0;
     };
@@ -46,9 +46,9 @@ define([
         .style('text-anchor', 'middle')
         .text(function(d) { return d; });
       
-      accesses = svg
+      swaps = svg
         .append('text')
-        .text('Accesses: ' + opts.stats.accesses)
+        .text('Swaps: ' + opts.stats.swaps)
         .attr('x', 0)
         .attr('y', 15);
       
@@ -94,9 +94,9 @@ define([
         .duration(this.duration)
         .delay(delay);
       
-      accesses
+      swaps
         .transition()
-        .text('Accesses: ' + stats.accesses)
+        .text('Swaps: ' + stats.swaps)
         .duration(this.duration)
         .delay(delay);
       
