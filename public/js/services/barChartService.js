@@ -96,7 +96,7 @@ define([
           .filter(function(d, i) { return i === pairs[0] || i === pairs[1]; })
             .transition()
             .attr('fill', this.highlightedColor)
-            .duration(this.duration)
+            .duration(this.duration / 2)
             .delay(delay);
       }
       

@@ -22,5 +22,7 @@ define([
       .otherwise({
         redirectTo: '/visualization'
       });
+  }]).config(['$locationProvider', function($locationProvider) {
+    $locationProvider.html5Mode(true);
   }]);
 });
