@@ -32,6 +32,7 @@ require.config({
 define([
   'app',
   'routes/mainRoutes',
-], function() {
+], function(app) {
   angular.bootstrap(document, ['visualizr']);
+  document.getElementById('loader').style.display = 'none';
 });

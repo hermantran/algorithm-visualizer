@@ -9,11 +9,11 @@ block content
         ul.nav.nav-pills.pull-right
           - var routes = ['Visualization', 'Benchmarking', 'Source'];
           - for (var i = 0; i < routes.length; ++i)
-            li
+            li(data-ng-class='isActive("#{routes[i].toLowerCase()}") ? "nav-active": ""')
               a(href="/#{routes[i].toLowerCase()}"). #{routes[i]}
           
     hr
-          
+    img#loader(src='img/ajax-loader.gif')
     ng:view
     
   script(src='js/lib/require.min.js', data-main='js/main')

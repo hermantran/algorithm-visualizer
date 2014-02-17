@@ -59,7 +59,7 @@ define([
         .attr('x', function(d, i) { return (options.width / dataset.length) * i + 5; })
         .attr('y', function(d) { return options.height - yScale(d); })
         .attr('fill', this.barColor);
-    }
+    };
     
     this.clearTransitions = function() {
       datasets.length = 0;
