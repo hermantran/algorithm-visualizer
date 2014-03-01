@@ -27,7 +27,7 @@ define([
         $scope.dataset = arrayService.randomArray($scope.arraySize);
         barChartService.drawBars($scope.dataset);
         barChartService.clearTransitions();
-        algorithmsService.sort(sort, arrayService.deepCopy($scope.dataset));  
+        algorithmsService.sort(sort, $scope.dataset.slice(0));  
         barChartService.runTransitions(); 
       } else {
         $scope.error = true;  

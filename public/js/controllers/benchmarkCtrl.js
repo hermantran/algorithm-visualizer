@@ -11,7 +11,7 @@ define([
     $scope.error = false;
     
     $scope.init = function() {
-      algorithmsService.setAfterSwap(function() {});
+      algorithmsService.setAfterSwap(angular.noop);
     };
 
     $scope.clearRuns = function() {

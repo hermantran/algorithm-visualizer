@@ -69,8 +69,8 @@ define([
     };
     
     this.addTransition = function(opts) {
-      datasets.push(arrayService.deepCopy(opts.dataset));  
-      pairs.push(arrayService.deepCopy(opts.pairs));
+      datasets.push(opts.dataset.slice(0));  
+      pairs.push(opts.pairs.slice(0));
       stats.push(arrayService.deepCopy(opts.stats));
     };
     
