@@ -1,25 +1,26 @@
 (function() {
   'use strict';
   var algorithms = {},
-      // Stats on latest sort - runtime in ms, array element comparisons, array element accesses
+      // Stats on latest sort - runtime in ms, array element comparisons, array element accesses, sort type
       stats = {
+        sort: null,
         runtime: 0,
         comparisons: 0,
         swaps: 0
       },
       // Storing reference to array to be sorted, for use with internal helper functions
       _array,
-      // Timestamp function to benchmark the runtime of each sorting algorithm,
+      // Timestamp function to benchmark the runtime of each sorting algorithm
       _now;
   
-  _now = (function(){
+  _now = (function() {
     var now;
     
     if (typeof window === 'undefined') {
       // http://stackoverflow.com/questions/11725691/how-to-get-a-microtime-in-node-js
       now = function now() {
         var hrTime = process.hrtime();
-        return (hrTime[0] * 1000 + hrTime[1] / 1000);
+        return (hrTime[0] * 100000 + hrTime[1] / 100000);
       };
     } else { 
       // performance.now() polyfill https://gist.github.com/paulirish/5438650
@@ -46,6 +47,12 @@
     
     return now;
   })();
+  
+  function _noop() {}
+  
+  function _min(first, second) {
+    return first <= second ? first : second;
+  }
   
   // Swaps the values at two given array indexes - two array element accesses
   function _swap(first, second) {
@@ -142,6 +149,58 @@
     }
   };
 
+  algorithms.heapSort = function heapSort(array) {
+    var len = array.length,
+        heapSize = len,
+        i;
+    
+    if (len <= 1) {
+      return;  
+    }
+    
+    for (i = 1; i < len; ++i) {
+      _heapify(i);
+    }
+    
+    for (i = 0; i < len - 1; ++i) {
+      heapSize--;
+      _swap(0, heapSize);
+      _reorder(0, heapSize);
+    }
+    
+    function _heapify(index) {
+      var parent = Math.floor((index - 1) / 2);
+      
+      if (_compare(index, '>', parent)) {
+        _swap(index, parent);
+        _heapify(parent);
+      }
+    }
+    
+    function _reorder(index, size) {
+      var leftChild = (2 * index) + 1,
+          rightChild = leftChild + 1,
+          swapIndex = index;
+      
+      if (index >= size) {
+        return;  
+      }
+      
+      if (leftChild < size && _compare(leftChild, '>', swapIndex)) {
+        swapIndex = leftChild;
+      }
+      
+      if (rightChild < size && _compare(rightChild, '>', swapIndex)) {
+        swapIndex = rightChild;  
+      }
+      
+      if (swapIndex > index) {
+        _swap(index, swapIndex);
+        _reorder(swapIndex, size);
+      }
+    }
+  };
+
   algorithms.insertionSort = function insertionSort(array) {
     var len = array.length,
         pos,
@@ -176,10 +235,6 @@
       for (i = 0; i < len; i += (2 * width)) {
         _merge(i, _min(i + width, len), _min(i + (2*width), len));  
       }
-    }
-    
-    function _min(first, second) {
-      return first <= second ? first : second;
     }
     
     function _merge(left, right, end) {
@@ -285,51 +340,27 @@
     }
   };
 
-  // Add the internal helper functions for read-only
-  if ('defineProperties' in Object) {
-    Object.defineProperties(algorithms, {
-      afterSwap: {
-        enumerable: false,
-        writable: true
-      },
-      afterComparison: {
-        enumerable: false,
-        writable: true
-      },
-      stats: {
-        enumerable: false,
-        writable: true
-      },
-      _swap: {
-        enumerable: false,
-        configurable: false,
-        writable: false,
-        value: _swap
-      },
-      _compare: {
-        enumerable: false,
-        configurable: false,
-        writable: false,
-        value: _compare
-      }
-    });
-  }
+  // Expose internal helper functions for debug purposes
+  algorithms._now = _now;
+  algorithms._noop = _noop;
+  algorithms._min = _min;
+  algorithms._swap = _swap;
+  algorithms._compare = _compare;
 
   // Add these properties after each algorithm property is prepared
-  algorithms.afterSwap = function() {};
-  algorithms.afterComparison = function() {};
+  algorithms.afterSwap = _noop;
+  algorithms.afterComparison = _noop;
   algorithms.stats = stats;
 
   // http://www.matteoagosti.com/blog/2013/02/24/writing-javascript-modules-for-both-browser-and-node/
   if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
     module.exports = algorithms;
+  } 
+  else if (typeof define === 'function' && define.amd) {
+    define([], function() {
+      return algorithms;
+    });
   } else {
-    if (typeof define === 'function' && define.amd) {
-      define([], function() {
-        return algorithms;
-      });
-    } else {
-      window.algorithms = algorithms;
-    }
+    window.algorithms = algorithms;
   }
 })();

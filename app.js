@@ -5,7 +5,7 @@ var express = require('express');
 var routes = require('./routes');
 var http = require('http');
 var path = require('path');
-var algorithms = require('./public/js/lib/algorithms-clean.js');
+var algorithms = require('./public/js/lib/algorithms.debug.js');
 
 var app = express();
 

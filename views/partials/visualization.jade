@@ -16,9 +16,10 @@ div.row(data-ng-show='error')
 div.row.padded
   div.col-md-12
     - for (var algorithm in algorithms)
-      button.btn.btn-primary.margin(data-ng-click='animate(\'#{algorithm}\')')
-        - algorithm = algorithm.charAt(0).toUpperCase() + algorithm.replace('Sort', ' Sort').slice(1);
-          | #{algorithm}
+      - if (algorithm.indexOf('Sort') >= 0)
+        button.btn.btn-primary.margin(data-ng-click='animate(\'#{algorithm}\')')
+          - algorithm = algorithm.charAt(0).toUpperCase() + algorithm.replace('Sort', ' Sort').slice(1);
+            | #{algorithm}
     button.btn.margin(data-ng-click='reset()'). Reset Array
     button.btn.margin(data-ng-click='shuffle()'). Shuffle Array
     

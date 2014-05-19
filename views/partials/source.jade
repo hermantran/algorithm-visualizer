@@ -7,13 +7,14 @@ div.row
     ul.nav.nav-pills.nav-stacked
       - var i = 0;
       - for (var algorithm in algorithms)
-        - i++;
-          li(data-ng-class='{ active: isActive(#{i}) }', data-ng-click='setActive(#{i})')
-            a.is-clickable #{algorithm}
+        - if (algorithm.indexOf('Sort') >= 0)
+          - i++;
+            li(data-ng-class='{ active: isActive(#{i}) }', data-ng-click='setActive(#{i})')
+              a.is-clickable #{algorithm}
             
     h5.text-center. Helper Functions
     ul.nav.nav-pills.nav-stacked
-      - var helpers = ['_compare', '_swap'];
+      - var helpers = ['_compare', '_swap', '_min'];
       - for (var j = i+1, i = 0, len = helpers.length; i < len; ++i, ++j)
           li(data-ng-class='{ active: isActive(#{j}) }', data-ng-click='setActive(#{j})')
             a.is-clickable #{helpers[i]}
@@ -21,10 +22,11 @@ div.row
   div.col-md-10.language-javascript
       - var i = 0;
       - for (var algorithm in algorithms)
-        - i++;
-          pre(data-ng-show='isActive(#{i})')
-            code
-              | &nbsp;&nbsp;#{algorithms[algorithm].toString()}
+        - if (algorithm.indexOf('Sort') >= 0)
+          - i++;
+            pre(data-ng-show='isActive(#{i})')
+              code
+                | &nbsp;&nbsp;#{algorithms[algorithm].toString()}
       - for (var j = i+1, i = 0, len = helpers.length; i < len; ++i, ++j)
           pre(data-ng-show='isActive(#{j})')
             code
